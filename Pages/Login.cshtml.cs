@@ -11,9 +11,10 @@ public class LoginModel(AppDb db) : PageModel
     public string? Error { get; set; }
     public async Task<IActionResult> OnPostAsync()
     {
-        var u = db.Users.FirstOrDefault(x => x.Email == Email.Trim().ToLower());
+        var login = Email.Trim().ToLower();
+        var u = db.Users.FirstOrDefault(x => x.Email == login || x.Phone == login);
         if (u == null || new PasswordHasher<User>().VerifyHashedPassword(u, u.PasswordHash, Password) == PasswordVerificationResult.Failed)
-        { Error = "Неверная почта или пароль"; return Page(); }
+        { Error = "Неверный телефон/почта или пароль"; return Page(); }
         await Auth.SignIn(HttpContext, u);
         return LocalRedirect(Url.IsLocalUrl(ReturnUrl) ? ReturnUrl! : "/Account");
     }

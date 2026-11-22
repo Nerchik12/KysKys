@@ -1,3 +1,32 @@
 @page
 @{ ViewData["Title"] = "Акции"; }
-<section class="sec"><h1>Все акции</h1><div class="grid promo">@for (var i = 1; i <= 12; i++){ <div class="banner">Акция №@i<br><small>скидка до @(i * 5)%</small></div> }</div></section>
+@{
+  var promos = new (string Text, string Badge, string Icon, string Color)[]
+  {
+    ("Паучи Carnica, Royalis, Pet-a-pet", "1+1", "🥫", "#FFD9CC"),
+    ("Лакомства Light Bites", "-30%", "🦴", "#DCF2C9"),
+    ("Влажные паучи PRO PLAN", "2+1", "🐟", "#D6EAF8"),
+    ("Сухие рационы PRO PLAN", "-60%", "🥣", "#FDEBD0"),
+    ("До 5 пауч в подарок", "🎁", "🐱", "#E8DAEF"),
+    ("Витаминные лакомства", "-25%", "💊", "#FADBD8"),
+    ("Одежда для собак", "Скидка 20%", "🧥", "#D6EAF8"),
+    ("Игрушки для кошек", "1+1", "🧸", "#FCF3CF"),
+    ("Лежанки и домики", "-40%", "🛏️", "#E7E0DA"),
+    ("Шампуни и уход", "-20%", "🧴", "#D5F5E3"),
+    ("Корма Grandorf", "-35%", "🐕", "#FADBD8"),
+    ("Пробники на 100 рублей", "🎁", "🎁", "#DCF2C9")
+  };
+}
+<section class="sec">
+  <h1>Все акции</h1>
+  <div class="promo-grid">
+    @foreach (var pr in promos)
+    {
+      <div class="promo-card" style="background:@pr.Color">
+        <span class="promo-icon">@pr.Icon</span>
+        <span class="promo-badge">@pr.Badge</span>
+        <b>@pr.Text</b>
+      </div>
+    }
+  </div>
+</section>

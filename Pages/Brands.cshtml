@@ -1,3 +1,23 @@
 @page
 @{ ViewData["Title"] = "Бренды"; }
-<section class="sec"><h1>Популярные бренды</h1><div class="grid brands">@foreach (var b in Store.Brands){ <a class="brand" href="/Catalog">@b</a> }</div></section>
+@{
+  var names = new[] { "Pi-Pi Bent", "Trial", "Брит", "Stelline", "Light Bites", "Zoetis", "Grandorf", "Barbara", "Royal Canin", "Pro Plan", "Roybis", "Cat Step", "Cornica", "Purina", "Barkals", "Bayer", "Api-San", "Beaphar", "Felix", "Whiskas" };
+}
+<section class="sec">
+  <h1>Популярные бренды</h1>
+  <div class="catalog" style="padding:0">
+    <aside>
+      <h3>Бренд</h3>
+      @foreach (var letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЖЗИКЛМНОПРСТУФХЦЧШЩЭЮЯ".ToCharArray().Take(24))
+      {
+        <label><input type="checkbox"> @letter</label>
+      }
+    </aside>
+    <div>
+      <div class="searchbar"><input type="search" placeholder="Поиск бренда"><button class="btn">Найти</button></div>
+      <div class="brands-grid">@foreach (var b in names){ <a class="brand" href="/Catalog">@b</a> }</div>
+      <div class="pager"><a href="#" class="on"></a><a href="#"></a><a href="#"></a></div>
+      <button class="load-more">Показать еще</button>
+    </div>
+  </div>
+</section>

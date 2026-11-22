@@ -1,6 +1,38 @@
 @page
 @model ContactsModel
-@{ ViewData["Title"] = "Контакты"; }
-<section class="sec"><h1>Остались вопросы?</h1>
-  @if (TempData["ok"] != null){ <p>Спасибо! Мы перезвоним вам в ближайшее время.</p> }
-  <form class="form" method="post"><input name="name" placeholder="Имя" required><input name="phone" type="tel" placeholder="Телефон" required><button class="btn">Отправить</button></form></section>
+@{ ViewData["Title"] = "Контакты"; ViewData["HideContacts"] = true; }
+
+<section class="contacts" style="padding-top:20px">
+  <div class="map" style="height:380px;margin-bottom:34px">
+    <iframe title="Карта" loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=37.58%2C55.73%2C37.66%2C55.78&amp;layer=mapnik"></iframe>
+    <span class="map-pin">📍</span>
+    <span class="map-label">г. Москва, ул. Владимирская, д. 11</span>
+  </div>
+  <div class="cgrid">
+    <div>
+      <h2>Контактная информация</h2>
+      <h4 style="color:var(--o)">Режим работы</h4>
+      <p>ПН–ПТ 10:00–20:00<br>СБ–ВС 10:00–18:00</p>
+      <h4 style="color:var(--o)">Как с нами связаться</h4>
+      <p>+7 (000) 000-00-00<br>info@kyskys.ru</p>
+      <h4 style="color:var(--o)">Где мы находимся</h4>
+      <p>г. Москва, ул. Владимирская, д. 11</p>
+      <div class="socials"><a href="#" aria-label="Telegram">✈</a><a href="#" aria-label="ВКонтакте">ВК</a></div>
+    </div>
+    <div class="contact-photo">👩‍👩‍👧‍👦🐕<span class="arc"></span></div>
+  </div>
+</section>
+
+<section class="ask" style="background:var(--o);color:#fff;border-radius:40px;margin:30px 4vw 0">
+  <div style="background:var(--t);border-radius:50%;min-height:280px;display:grid;place-items:center;font-size:110px">🐶</div>
+  <div>
+    <h2 style="color:#fff">Остались вопросы?</h2>
+    @if (TempData["ok"] != null){ <p>Спасибо! Мы перезвоним вам в ближайшее время.</p> }
+    <form class="form" method="post">
+      <input name="name" placeholder="Имя" required>
+      <input name="phone" type="tel" placeholder="Телефон" required>
+      <label class="check"><input type="checkbox" required> Согласен на обработку персональных данных</label>
+      <button class="btn" style="background:var(--o)">Отправить</button>
+    </form>
+  </div>
+</section>

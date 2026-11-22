@@ -1,12 +1,50 @@
 @page
 @model CatalogModel
 @{ ViewData["Title"] = Model.IsNew ? "Новинки" : "Каталог"; }
-<section class="hero small"><h1>@(Model.IsNew ? "Новинки" : "Скидка 20%")</h1></section>
+
+@if (Model.IsNew)
+{
+  <section class="hero paws">
+    <div><h1>Новинки</h1><p>Мы активно ищем самые интересные, полезные и необычные товары для ваших питомцев.</p></div>
+    <div class="pets">🐹🕶️</div>
+  </section>
+}
+else
+{
+  <section class="hero small paws"><div><h1>Скидка 20%</h1><p>на 2-ю весеннюю одежду и амуницию</p></div><div class="pets">🐶🐱</div></section>
+}
+
 <div class="catalog">
-  <aside><h3>Категории</h3>
-    <a href="/Catalog" class="@(Model.Category==null?"on":"")">Все товары</a>
-    @foreach (var c in Store.Categories){ <a href="/Catalog?category=@c&isNew=@Model.IsNew" class="@(Model.Category==c?"on":"")">@c</a> }
+  <aside>
+    <h3>@(Model.IsNew ? "Категории новинок" : "Категории")</h3>
+    <a href="/Catalog?isNew=@Model.IsNew.ToString().ToLower()" class="@(Model.Category==null?"on":"")">Все товары</a>
+    @foreach (var c in Store.Categories)
+    {
+      <a href="/Catalog?category=@c&isNew=@Model.IsNew.ToString().ToLower()" class="@(Model.Category==c?"on":"")">@c</a>
+      @if (c == "Одежда" && !Model.IsNew)
+      {
+        <div class="sub"><a href="/Catalog?category=Одежда">Одежда для собак</a><a href="/Catalog?category=Одежда">Обувь для собак</a><a href="/Catalog?category=Одежда">Одежда для кошек</a></div>
+      }
+    }
+    @if (Model.Category == "Корма")
+    {
+      <div class="filters" style="box-shadow:none;padding:10px 0">
+        <h4>Категории</h4><a href="#">Корма</a><a href="#">Лакомства</a><a href="#">Витамины</a>
+        <h4>Бренд</h4><input type="search" placeholder="Поиск бренда">
+        @foreach (var b in Store.Brands.Take(5)){ <label><input type="checkbox"> @b</label> }
+        <h4>Питомец</h4><label><input type="checkbox"> Собаки</label><label><input type="checkbox"> Кошки</label><label><input type="checkbox"> Грызуны</label>
+        <h4>Упаковка</h4><label><input type="checkbox"> Пакет</label><label><input type="checkbox"> Банка</label><label><input type="checkbox"> Паучи</label><label><input type="checkbox"> Коробка</label>
+        <h4>Назначение</h4><label><input type="checkbox"> Для стерилизованных</label><label><input type="checkbox"> Для чувствительного пищеварения</label><label><input type="checkbox"> Для шерсти</label>
+        <h4>Возрастная группа</h4><label><input type="checkbox"> Котята</label><label><input type="checkbox"> Взрослые</label><label><input type="checkbox"> Пожилые</label>
+        <h4>Цена</h4><input type="range" min="0" max="5000" value="2500"><div style="display:flex;gap:8px"><input type="number" placeholder="от" style="width:80px;padding:8px;border:1px solid #ddd;border-radius:8px"><input type="number" placeholder="до" style="width:80px;padding:8px;border:1px solid #ddd;border-radius:8px"></div>
+      </div>
+    }
   </aside>
-  <div><h2>Популярные товары</h2>
-    <div class="grid">@foreach (var p in Model.Items){ <partial name="_Card" model="p" /> }</div></div>
+  <div>
+    <div class="searchbar"><input type="search" placeholder="Поиск товаров"><button class="btn">Найти</button></div>
+    <h2>@(Model.IsNew ? "Все новинки" : "Популярные товары")</h2>
+    <div class="grid">@foreach (var p in Model.Items){ <partial name="_Card" model="p" /> }</div>
+    <div class="pager"><a href="#" class="on"></a><a href="#"></a><a href="#"></a><a href="#"></a><a href="#"></a></div>
+    <button class="load-more">Показать еще</button>
+  </div>
 </div>
