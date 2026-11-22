@@ -30,10 +30,10 @@ git push -u origin main
 
 | Секрет | Что вписать |
 |---|---|
-| `WEBDEPLOY_SERVER` | адрес сервера Web Deploy, например `siteXXXXX.siteasp.net` (без `https://` и порта) |
-| `WEBDEPLOY_SITE` | имя сайта (`msdeploySite` из publish profile) |
-| `WEBDEPLOY_USER` | имя пользователя Web Deploy |
-| `WEBDEPLOY_PASS` | пароль |
+| `WEBSITE_NAME` | имя сайта (`siteXXXXX`) из карточки **Visual Studio access** |
+| `SERVER_COMPUTER_NAME` | адрес Web Deploy, например `https://siteXXXXX.siteasp.net:8172` |
+| `SERVER_USERNAME` | имя пользователя Web Deploy (обычно совпадает с `siteXXXXX`) |
+| `SERVER_PASSWORD` | пароль Web Deploy |
 
 После этого каждый push в `main` собирает и выкладывает сайт. Запустить вручную: вкладка Actions → Deploy to MonsterASP.NET → Run workflow.
 

@@ -11,28 +11,24 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-dotnet@v4
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
 
-      - name: Publish
-        run: dotnet publish KysKys.csproj -c Release -o publish
+      - name: Restore
+        run: dotnet restore KysKys.csproj
 
-      # Web Deploy: данные берутся из панели MonsterASP.NET (см. README)
-      - name: Web Deploy
-        shell: pwsh
-        env:
-          WD_SERVER: ${{ secrets.WEBDEPLOY_SERVER }}
-          WD_SITE: ${{ secrets.WEBDEPLOY_SITE }}
-          WD_USER: ${{ secrets.WEBDEPLOY_USER }}
-          WD_PASS: ${{ secrets.WEBDEPLOY_PASS }}
-        run: |
-          $msdeploy = "C:\Program Files (x86)\IIS\Microsoft Web Deploy V3\msdeploy.exe"
-          & $msdeploy `
-            -verb:sync `
-            -source:contentPath="$PWD\publish" `
-            -dest:contentPath="$env:WD_SITE",computerName="https://$($env:WD_SERVER):8172/msdeploy.axd?site=$env:WD_SITE",userName="$env:WD_USER",password="$env:WD_PASS",authType=Basic `
-            -enableRule:AppOffline `
-            -enableRule:DoNotDeleteRule `
-            -allowUntrusted
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Build
+        run: dotnet build KysKys.csproj -c Release --no-restore
+
+      - name: Publish
+        run: dotnet publish KysKys.csproj -c Release --no-restore -o publish -r win-x86 --self-contained false
+
+      - name: Deploy to MonsterASP.NET via Web Deploy
+        uses: rasmusbuchholdt/simply-web-deploy@2.1.0
+        with:
+          website-name: ${{ secrets.WEBSITE_NAME }}
+          server-computer-name: ${{ secrets.SERVER_COMPUTER_NAME }}
+          server-username: ${{ secrets.SERVER_USERNAME }}
+          server-password: ${{ secrets.SERVER_PASSWORD }}
