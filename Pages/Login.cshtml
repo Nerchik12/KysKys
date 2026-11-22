@@ -1,9 +1,18 @@
 @page
 @model LoginModel
 @{ ViewData["Title"] = "Вход"; }
-<section class="sec teal"><form class="form" method="post"><h1>С возвращением!</h1>
-  <input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl">
-  <input name="Email" type="email" placeholder="Почта" autocomplete="email" required>
-  <input name="Password" type="password" placeholder="Пароль" autocomplete="current-password" required>
-  @if (Model.Error != null){ <p class="err">@Model.Error</p> }
-  <button class="btn">Войти</button><a href="/Register">Нет аккаунта? Зарегистрироваться</a></form></section>
+<section class="auth-page paws">
+  <form class="form" method="post">
+    <h1>С возвращением!</h1>
+    <p style="margin:0 0 10px;font-size:13px;color:var(--muted)">Войдите, чтобы увидеть бонусы, заказы и персональные предложения.</p>
+    <input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl">
+    <label>Номер телефона или e-mail</label>
+    <input name="Email" type="text" placeholder="Номер телефона или e-mail" autocomplete="username" required>
+    <label>Пароль</label>
+    <input name="Password" type="password" placeholder="Пароль" autocomplete="current-password" required>
+    <div class="forgot"><a href="#">Забыли пароль?</a></div>
+    @if (Model.Error != null){ <p class="err">@Model.Error</p> }
+    <button class="btn">Войти</button>
+    <div class="link">Нет аккаунта? <a href="/Register">Регистрация</a></div>
+  </form>
+</section>

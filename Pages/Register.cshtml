@@ -1,10 +1,22 @@
 @page
 @model RegisterModel
 @{ ViewData["Title"] = "Регистрация"; }
-<section class="sec teal"><form class="form" method="post"><h1>Регистрация</h1>
-  <input name="Name" placeholder="Ваше имя" required maxlength="60">
-  <input name="Email" type="email" placeholder="Email" required>
-  <input name="Phone" type="tel" placeholder="Телефон">
-  <input name="Password" type="password" placeholder="Пароль (от 6 символов)" minlength="6" required>
-  @if (Model.Error != null){ <p class="err">@Model.Error</p> }
-  <button class="btn">Зарегистрироваться</button><a href="/Login">Уже есть аккаунт? Войти</a></form></section>
+<section class="auth-page paws">
+  <form class="form" method="post" onsubmit="return document.getElementById('pw2').value === document.getElementById('pw1').value">
+    <h1>Регистрация</h1>
+    <p style="margin:0 0 10px;font-size:13px;color:var(--muted)">Создайте профиль и получите скидку на первый заказ.</p>
+    <input type="hidden" name="Email" value="">
+    <label>Номер телефона</label>
+    <input name="Phone" type="tel" placeholder="+7 (999) 000-00-00" required>
+    <label>Ваше имя</label>
+    <input name="Name" placeholder="Ваше имя" required maxlength="60">
+    <label>Пароль</label>
+    <input id="pw1" name="Password" type="password" placeholder="Пароль (от 6 символов)" minlength="6" required>
+    <label>Повтор пароля</label>
+    <input id="pw2" type="password" placeholder="Повторите пароль" minlength="6" required>
+    <label class="check"><input type="checkbox" required> Согласен с пользовательским соглашением и политикой конфиденциальности</label>
+    @if (Model.Error != null){ <p class="err">@Model.Error</p> }
+    <button class="btn">Зарегистрироваться</button>
+    <div class="link">У вас уже есть аккаунт? <a href="/Login">Войти</a></div>
+  </form>
+</section>

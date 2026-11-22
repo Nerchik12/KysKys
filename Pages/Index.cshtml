@@ -1,17 +1,72 @@
 @page
 @inject AppDb Db
 @{ ViewData["Title"] = "Главная"; }
-<section class="hero"><div><h1>Скидка 20%</h1><p>на 2-ю весеннюю одежду и ошейники</p><a class="btn white" href="/Promotions">Все акции</a></div><span class="paw">🐾</span></section>
-<section class="info">
-  <div><h3>О нас</h3><p>Команда, которая любит животных и знает, как о них заботиться.</p></div>
-  <div><h3>Ассортимент</h3><p>Корма, одежда, игрушки, лежанки и лакомства для кошек и собак.</p></div>
-  <div><h3>Доставка</h3><p>Бесплатная доставка при заказе от 3000 ₽.</p></div>
+<section class="hero paws">
+  <div>
+    <h1>Скидка 20%</h1>
+    <p>на 2-ю весеннюю одежду и амуницию</p>
+    <a class="btn white" href="/Promotions">Все акции</a>
+    <div class="slider-dots"><i class="on"></i><i></i><i></i></div>
+  </div>
+  <div class="pets">🐶 🐱</div>
+  <div class="stamp">🐾<br>ДО 1.05</div>
 </section>
-<section class="sec"><h2>Популярные товары</h2>
-  <div class="row">@foreach (var p in Store.Products.Take(8)){ <partial name="_Card" model="p" /> }</div></section>
-<section class="banners"><div>Таблетки от блох и клещей — скидка 30%</div><div>До 5 паучей в подарок</div><div>Большие пачки со скидкой 60%</div></section>
-<section class="sec teal"><h2>Главный показатель качества — довольные клиенты</h2>
-  <div class="row">@foreach (var r in Db.Reviews.OrderByDescending(x => x.Id).Take(4).ToList()){ <div class="rev"><b>@r.Name</b><div>@("★".PadRight(r.Stars, '★'))</div><p>@r.Text</p></div> }</div>
-  <a class="btn white" href="/Reviews">Смотреть все отзывы</a></section>
-<section class="sec"><h2>Возникли вопросы?</h2>
-  <form class="form" method="post" asp-page="/Contacts"><input name="name" placeholder="Имя" required><input name="phone" type="tel" placeholder="Телефон" required><button class="btn">Отправить</button></form></section>
+
+<section class="info">
+  <div><div class="ico">🐾</div><h3>О нас</h3><p>Команда, которая любит животных и знает, как о них заботиться. Мы помогаем питомцам быть здоровыми и счастливыми каждый день.</p></div>
+  <div><div class="ico">🛍️</div><h3>Ассортимент</h3><p>Корма, одежда, игрушки, лежанки и лакомства для кошек и собак. Более 6500 товаров для любых питомцев.</p></div>
+  <div><div class="ico">🚚</div><h3>Доставка</h3><p>Бесплатная доставка при заказе от 3000 ₽. Быстро доставим заказ по Москве и области в удобное время.</p></div>
+</section>
+
+<section class="sec">
+  <h2>Популярные товары</h2>
+  <div class="carousel">
+    <button class="arrow prev" data-dir="-1" aria-label="Назад">‹</button>
+    <div class="row">@foreach (var p in Store.Products.Take(8)){ <partial name="_Card" model="p" /> }</div>
+    <button class="arrow next" data-dir="1" aria-label="Вперёд">›</button>
+  </div>
+</section>
+
+<section class="banners">
+  <div>💊 Таблетки от блох и клещей — скидка 30%</div>
+  <div>🎁 Дарим пробники на 100 рублей</div>
+  <div>🛡️ Защита от клещей и блох для питомцев</div>
+</section>
+
+<section class="wide-banners">
+  <div class="a">До 5 пачей в подарок<span class="emoji">🐱</span></div>
+  <div class="b">Большие пачки по большой скидке — до -60%<span class="emoji">🥫</span></div>
+</section>
+
+<section class="review-block paws">
+  <h2>Главный показатель качества нашей работы — довольные клиенты</h2>
+  <div class="carousel">
+    <button class="arrow prev" data-dir="-1" aria-label="Назад">‹</button>
+    <div class="row">
+      @foreach (var r in Db.Reviews.OrderByDescending(x => x.Id).Take(3).ToList())
+      {
+        <div class="rev">
+          <div class="who"><span class="avatar">🐾</span><b>@r.Name</b></div>
+          <div class="stars">@("★★★★★".Substring(0, Math.Max(1, Math.Min(5, r.Stars))))</div>
+          <p>@r.Text</p>
+        </div>
+      }
+    </div>
+    <button class="arrow next" data-dir="1" aria-label="Вперёд">›</button>
+  </div>
+  <a class="btn white" href="/Reviews" style="margin-top:26px">Посмотреть все отзывы</a>
+</section>
+
+<section class="ask">
+  <div class="blob">🐾</div>
+  <div>
+    <h2>Возникли вопросы?</h2>
+    @if (TempData["ok"] != null){ <p>Спасибо! Мы перезвоним вам в ближайшее время.</p> }
+    <form class="form" method="post" asp-page="/Contacts">
+      <input name="name" placeholder="Имя" required>
+      <input name="phone" type="tel" placeholder="Телефон" required>
+      <label class="check"><input type="checkbox" required> Согласен на обработку персональных данных</label>
+      <button class="btn">Отправить</button>
+    </form>
+  </div>
+</section>

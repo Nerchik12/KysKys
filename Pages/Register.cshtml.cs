@@ -12,7 +12,7 @@ public class RegisterModel(AppDb db) : PageModel
     public string? Error { get; set; }
     public async Task<IActionResult> OnPostAsync()
     {
-        var email = Email.Trim().ToLower();
+        var email = string.IsNullOrWhiteSpace(Email) ? Phone.Trim() + "@kyskys.ru" : Email.Trim().ToLower();
         if (Password.Length < 6) { Error = "Пароль должен быть не короче 6 символов"; return Page(); }
         if (db.Users.Any(x => x.Email == email)) { Error = "Эта почта уже зарегистрирована"; return Page(); }
         var u = new User { Name = Name.Trim(), Email = email, Phone = Phone.Trim() };

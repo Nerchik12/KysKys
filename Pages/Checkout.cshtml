@@ -1,11 +1,33 @@
 @page
 @model CheckoutModel
 @{ ViewData["Title"] = "Оформление заказа"; }
-<section class="sec"><h1>Оформление заказа</h1>
-  @foreach (var p in Model.Items){ <div class="line"><span>@p.Icon @p.Name</span><b>@p.Price.ToString("0") ₽</b></div> }
-  <div class="total">Итого: <b>@Model.Items.Sum(i => i.Price).ToString("0") ₽</b></div>
-  <form class="form" method="post" style="margin:24px 0 0">
-    <input name="Address" placeholder="Адрес доставки" required maxlength="200">
-    <input name="Phone" type="tel" placeholder="Телефон" value="@Model.Phone" required>
-    <p>Оплата при получении</p>
-    <button class="btn">Подтвердить заказ</button></form></section>
+<section class="sec">
+  <h1>Оформление заказа</h1>
+  <div class="checkout">
+    <div>
+      <div class="panel">
+        <h2>Способ оплаты</h2>
+        <div class="option on"><span style="font-size:26px">💳</span><span>Банковской картой онлайн</span></div>
+        <div class="option"><span style="font-size:26px">💵</span><span>Наличными при получении</span></div>
+      </div>
+      <div class="panel">
+        <h2>Способ получения</h2>
+        <div class="option on"><span style="font-size:26px">🏬</span><span>Самовывоз: г. Москва, ул. Владимирская, д. 11 <a href="/Contacts" style="color:var(--o);font-weight:700">Изменить</a></span></div>
+      </div>
+      <form id="order-form" class="panel" method="post">
+        <h2>Данные получателя</h2>
+        <div class="form" style="box-shadow:none;padding:0;max-width:none">
+          <input name="Address" placeholder="Адрес доставки" required maxlength="200">
+          <input name="Phone" type="tel" placeholder="Телефон" value="@Model.Phone" required>
+        </div>
+      </form>
+    </div>
+    <div class="panel summary">
+      <h2>Ваш заказ</h2>
+      @foreach (var p in Model.Items){ <div class="total"><span>@p.Name</span><b>@p.Price.ToString("0") ₽</b></div> }
+      <div class="total"><span>Доставка</span><b>Бесплатно</b></div>
+      <div class="total"><span>Итого</span><b style="color:var(--o);font-size:24px">@Model.Items.Sum(i => i.Price).ToString("0") ₽</b></div>
+      <button class="btn block" form="order-form" style="margin-top:18px">Оформить заказ</button>
+    </div>
+  </div>
+</section>

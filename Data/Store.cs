@@ -1,5 +1,5 @@
 namespace KysKys.Data;
-public record Product(int Id, string Name, string Category, string Brand, decimal Price, decimal? Old, double Rating, bool IsNew, string Icon);
+public record Product(int Id, string Name, string Category, string Brand, decimal Price, decimal? Old, double Rating, bool IsNew, string Icon, int Reviews, string? Badge);
 
 public static class Store
 {
@@ -11,8 +11,10 @@ public static class Store
         var cat = Categories[i % Categories.Length];
         var icon = cat switch { "Корма" => "🥫", "Одежда" => "🧥", "Игрушки" => "🧸", "Лежанки" => "🛏️", "Лакомства" => "🦴", _ => "🧴" };
         decimal price = 250 + i * 37 % 1900;
-        return new Product(i, $"{cat}: товар №{i}", cat, Brands[i % Brands.Length], price,
-            i % 3 == 0 ? Math.Round(price * 1.2m) : null, 4 + (i % 10) / 10.0, i % 4 == 0, icon);
+        var badge = i % 4 == 0 ? "-30%" : i % 7 == 0 ? "1+1" : null;
+        return new Product(i, $"{Brands[i % Brands.Length]} · {cat} №{i}", cat, Brands[i % Brands.Length], price,
+            i % 3 == 0 ? Math.Round(price * 1.2m) : null, 4 + (i % 10) / 10.0, i % 4 == 0, icon,
+            8 + (i * 7) % 180, badge);
     }).ToList();
 
 }
