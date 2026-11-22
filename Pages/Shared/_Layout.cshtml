@@ -1,0 +1,48 @@
+@using KysKys.Data
+@{ var cnt = CartStore.Get(Context.Session).Count; var p = ViewContext.RouteData.Values["page"]?.ToString() ?? ""; }
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>@ViewData["Title"] — Кыс-Кыс</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="~/css/site.css" asp-append-version="true">
+</head>
+<body>
+<header class="hdr">
+  <a class="logo" href="/">Кыс-Кыс</a>
+  <input type="checkbox" id="burger" hidden><label for="burger" class="burger" aria-label="Меню">☰</label>
+  <nav>
+    <a href="/About" class="@(p=="/About"?"on":"")">О нас</a>
+    <a href="/Catalog" class="@(p=="/Catalog"?"on":"")">Каталог</a>
+    <a href="/Promotions">Акции</a>
+    <a href="/Brands">Бренды</a>
+    <a href="/Catalog?isNew=true">Новинки</a>
+    <a href="/Reviews">Отзывы</a>
+    <a href="/Contacts">Контакты</a>
+  </nav>
+  <div class="icons"><a href="@(User.Identity?.IsAuthenticated == true ? "/Account" : "/Login")" aria-label="Кабинет">👤</a><a href="/Cart" class="cartbtn" aria-label="Корзина">🛒@if (cnt > 0){<b>@cnt</b>}</a></div>
+</header>
+<main>@RenderBody()</main>
+<section class="contacts">
+  <h2>Контактная информация</h2>
+  <div class="cgrid">
+    <ul>
+      <li>🕒 пн–пт 10:00–20:00, сб–вс 10:00–18:00</li>
+      <li>📞 +7 (000) 000-00-00</li>
+      <li>✉️ info@kyskys.ru</li>
+      <li>📍 г. Москва, ул. Владимирская, д. 12</li>
+    </ul>
+    <iframe title="Карта" loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=37.58%2C55.73%2C37.66%2C55.78&amp;layer=mapnik"></iframe>
+  </div>
+</section>
+<footer class="ftr">
+  <div><b class="logo">Кыс-Кыс</b><p>ООО «Кыс-Кыс»<br>г. Москва</p></div>
+  <div><h4>Информация</h4><a href="/Promotions">Акции</a><a href="/Brands">Бренды</a><a href="/Catalog">Каталог</a></div>
+  <div><h4>Компания</h4><a href="/About">О нас</a><a href="/Reviews">Отзывы</a><a href="/Contacts">Контакты</a></div>
+  <div><h4>Контакты</h4><span>+7 (000) 000-00-00</span><span>info@kyskys.ru</span></div>
+  <small>© 2026 Кыс-Кыс</small>
+</footer>
+</body>
+</html>

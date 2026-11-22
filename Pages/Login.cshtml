@@ -1,0 +1,9 @@
+@page
+@model LoginModel
+@{ ViewData["Title"] = "Вход"; }
+<section class="sec teal"><form class="form" method="post"><h1>С возвращением!</h1>
+  <input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl">
+  <input name="Email" type="email" placeholder="Почта" autocomplete="email" required>
+  <input name="Password" type="password" placeholder="Пароль" autocomplete="current-password" required>
+  @if (Model.Error != null){ <p class="err">@Model.Error</p> }
+  <button class="btn">Войти</button><a href="/Register">Нет аккаунта? Зарегистрироваться</a></form></section>

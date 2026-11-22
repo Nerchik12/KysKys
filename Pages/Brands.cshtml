@@ -1,0 +1,3 @@
+@page
+@{ ViewData["Title"] = "Бренды"; }
+<section class="sec"><h1>Популярные бренды</h1><div class="grid brands">@foreach (var b in Store.Brands){ <a class="brand" href="/Catalog">@b</a> }</div></section>

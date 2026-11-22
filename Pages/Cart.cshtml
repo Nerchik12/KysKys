@@ -1,0 +1,13 @@
+@page
+@model CartModel
+@{ ViewData["Title"] = "Корзина"; }
+<section class="sec">
+@if (!Model.Items.Any()){ <h1>Мяу… в корзине пусто :(</h1><a class="btn" href="/Catalog">За покупками</a> }
+else {
+  <h1>Товаров в корзине — @Model.Items.Count</h1>
+  @foreach (var p in Model.Items){ <div class="line"><span>@p.Icon @p.Name</span><b>@p.Price.ToString("0") ₽</b>
+    <form method="post" asp-page-handler="Remove" asp-route-id="@p.Id"><button class="btn ghost">Удалить</button></form></div> }
+  <div class="total">Итого: <b>@Model.Items.Sum(i => i.Price).ToString("0") ₽</b> <a class="btn" href="/Checkout">Оформить заказ</a></div>
+}
+</section>
+<section class="sec"><h2>Подборки для вас</h2><div class="row">@foreach (var p in Store.Products.Skip(10).Take(5)){ <partial name="_Card" model="p" /> }</div></section>

@@ -1,0 +1,11 @@
+@page
+@model CheckoutModel
+@{ ViewData["Title"] = "Оформление заказа"; }
+<section class="sec"><h1>Оформление заказа</h1>
+  @foreach (var p in Model.Items){ <div class="line"><span>@p.Icon @p.Name</span><b>@p.Price.ToString("0") ₽</b></div> }
+  <div class="total">Итого: <b>@Model.Items.Sum(i => i.Price).ToString("0") ₽</b></div>
+  <form class="form" method="post" style="margin:24px 0 0">
+    <input name="Address" placeholder="Адрес доставки" required maxlength="200">
+    <input name="Phone" type="tel" placeholder="Телефон" value="@Model.Phone" required>
+    <p>Оплата при получении</p>
+    <button class="btn">Подтвердить заказ</button></form></section>

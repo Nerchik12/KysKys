@@ -1,0 +1,6 @@
+@page
+@model ContactsModel
+@{ ViewData["Title"] = "Контакты"; }
+<section class="sec"><h1>Остались вопросы?</h1>
+  @if (TempData["ok"] != null){ <p>Спасибо! Мы перезвоним вам в ближайшее время.</p> }
+  <form class="form" method="post"><input name="name" placeholder="Имя" required><input name="phone" type="tel" placeholder="Телефон" required><button class="btn">Отправить</button></form></section>

@@ -1,0 +1,17 @@
+@page
+@inject AppDb Db
+@{ ViewData["Title"] = "Главная"; }
+<section class="hero"><div><h1>Скидка 20%</h1><p>на 2-ю весеннюю одежду и ошейники</p><a class="btn white" href="/Promotions">Все акции</a></div><span class="paw">🐾</span></section>
+<section class="info">
+  <div><h3>О нас</h3><p>Команда, которая любит животных и знает, как о них заботиться.</p></div>
+  <div><h3>Ассортимент</h3><p>Корма, одежда, игрушки, лежанки и лакомства для кошек и собак.</p></div>
+  <div><h3>Доставка</h3><p>Бесплатная доставка при заказе от 3000 ₽.</p></div>
+</section>
+<section class="sec"><h2>Популярные товары</h2>
+  <div class="row">@foreach (var p in Store.Products.Take(8)){ <partial name="_Card" model="p" /> }</div></section>
+<section class="banners"><div>Таблетки от блох и клещей — скидка 30%</div><div>До 5 паучей в подарок</div><div>Большие пачки со скидкой 60%</div></section>
+<section class="sec teal"><h2>Главный показатель качества — довольные клиенты</h2>
+  <div class="row">@foreach (var r in Db.Reviews.OrderByDescending(x => x.Id).Take(4).ToList()){ <div class="rev"><b>@r.Name</b><div>@("★".PadRight(r.Stars, '★'))</div><p>@r.Text</p></div> }</div>
+  <a class="btn white" href="/Reviews">Смотреть все отзывы</a></section>
+<section class="sec"><h2>Возникли вопросы?</h2>
+  <form class="form" method="post" asp-page="/Contacts"><input name="name" placeholder="Имя" required><input name="phone" type="tel" placeholder="Телефон" required><button class="btn">Отправить</button></form></section>

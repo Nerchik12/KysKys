@@ -1,0 +1,8 @@
+@model Product
+<article class="card">
+  <div class="ph">@Model.Icon</div>
+  <div class="pr">@Model.Price.ToString("0") ₽ @if (Model.Old != null){<s>@Model.Old?.ToString("0") ₽</s>}</div>
+  <h3>@Model.Name</h3>
+  <div class="rt">★ @Model.Rating.ToString("0.0")</div>
+  <form method="post" asp-page="/Cart" asp-page-handler="Add" asp-route-id="@Model.Id"><button class="btn">В корзину</button></form>
+</article>

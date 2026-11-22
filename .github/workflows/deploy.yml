@@ -1,0 +1,38 @@
+name: Deploy to MonsterASP.NET
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Publish
+        run: dotnet publish KysKys.csproj -c Release -o publish
+
+      # Web Deploy: данные берутся из панели MonsterASP.NET (см. README)
+      - name: Web Deploy
+        shell: pwsh
+        env:
+          WD_SERVER: ${{ secrets.WEBDEPLOY_SERVER }}
+          WD_SITE: ${{ secrets.WEBDEPLOY_SITE }}
+          WD_USER: ${{ secrets.WEBDEPLOY_USER }}
+          WD_PASS: ${{ secrets.WEBDEPLOY_PASS }}
+        run: |
+          $msdeploy = "C:\Program Files (x86)\IIS\Microsoft Web Deploy V3\msdeploy.exe"
+          & $msdeploy `
+            -verb:sync `
+            -source:contentPath="$PWD\publish" `
+            -dest:contentPath="$env:WD_SITE",computerName="https://$($env:WD_SERVER):8172/msdeploy.axd?site=$env:WD_SITE",userName="$env:WD_USER",password="$env:WD_PASS",authType=Basic `
+            -enableRule:AppOffline `
+            -enableRule:DoNotDeleteRule `
+            -allowUntrusted
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }

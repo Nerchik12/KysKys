@@ -1,0 +1,12 @@
+@page
+@model CatalogModel
+@{ ViewData["Title"] = Model.IsNew ? "Новинки" : "Каталог"; }
+<section class="hero small"><h1>@(Model.IsNew ? "Новинки" : "Скидка 20%")</h1></section>
+<div class="catalog">
+  <aside><h3>Категории</h3>
+    <a href="/Catalog" class="@(Model.Category==null?"on":"")">Все товары</a>
+    @foreach (var c in Store.Categories){ <a href="/Catalog?category=@c&isNew=@Model.IsNew" class="@(Model.Category==c?"on":"")">@c</a> }
+  </aside>
+  <div><h2>Популярные товары</h2>
+    <div class="grid">@foreach (var p in Model.Items){ <partial name="_Card" model="p" /> }</div></div>
+</div>

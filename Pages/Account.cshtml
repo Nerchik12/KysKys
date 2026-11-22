@@ -1,0 +1,9 @@
+@page
+@model AccountModel
+@{ ViewData["Title"] = "Личный кабинет"; }
+<section class="sec"><h1>Привет, @Model.Me.Name!</h1>
+  <p>@Model.Me.Email @(string.IsNullOrEmpty(Model.Me.Phone) ? "" : "· " + Model.Me.Phone)</p>
+  <h2>Мои заказы</h2>
+  @if (!Model.Orders.Any()){ <p>Заказов пока нет.</p><a class="btn" href="/Catalog">В каталог</a> }
+  @foreach (var o in Model.Orders){ <div class="line"><div><b>Заказ №@o.Id</b> от @o.Created.ToLocalTime().ToString("dd.MM.yyyy")<br><small>@o.Items</small></div><div><b>@o.Total.ToString("0") ₽</b><br><small>@o.Status</small></div></div> }
+  <form method="post" asp-page-handler="Logout"><button class="btn ghost">Выйти</button></form></section>

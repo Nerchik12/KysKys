@@ -1,0 +1,10 @@
+@page
+@model ReviewsModel
+@{ ViewData["Title"] = "Отзывы"; }
+<section class="sec"><h1>Отзывы</h1>
+  <div class="grid">@foreach (var r in Model.Items){ <div class="rev light"><b>@r.Name</b><div>@("★".PadRight(r.Stars, '★'))</div><p>@r.Text</p></div> }</div></section>
+<section class="sec teal"><h2>Оставьте свой отзыв</h2><a class="btn white" href="#modal">Оставить отзыв</a></section>
+<div id="modal" class="modal"><form method="post" class="form"><a href="#" class="x">✕</a><h2>Оставьте свой отзыв</h2>
+  <input name="Name" placeholder="Имя" required>
+  <select name="Stars"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select>
+  <textarea name="Text" placeholder="Ваш отзыв" required></textarea><button class="btn">Опубликовать</button></form></div>
