@@ -2,6 +2,8 @@
 
 ASP.NET Core 8 (Razor Pages) + SQLite (EF Core). Адаптивная вёрстка, корзина, регистрация и вход, личный кабинет, оформление заказа, отзывы.
 
+**Сайт:** http://zoomagaz.runasp.net/ — деплой настроен через GitHub Actions, каждый push в `main` выкладывает новую версию.
+
 ## Локальный запуск
 ```bash
 dotnet run
